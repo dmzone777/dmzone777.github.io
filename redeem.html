@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Redeem Checker</title>
+
+<style>
+body{
+    background:#203a43;
+    color:white;
+    text-align:center;
+    font-family:sans-serif;
+}
+input{
+    padding:10px;
+    width:200px;
+}
+button{
+    padding:10px;
+    margin:10px;
+}
+</style>
+
+</head>
+
+<body>
+
+<h2>🎁 Redeem Checker</h2>
+
+<input type="text" id="code" placeholder="Enter code">
+<br>
+
+<button onclick="check()">Check</button>
+
+<p id="result"></p>
+
+<button onclick="back()">⬅ Back</button>
+
+<script>
+let validCodes = [
+  "FF6YH3BFD7VT",
+  "B1RK7C5ZL8YT"
+];
+
+function check(){
+  let c = code.value;
+
+  if(validCodes.includes(c)){
+    result.innerHTML = "✅ Reward Unlocked!";
+    result.style.color="lightgreen";
+  } else {
+    result.innerHTML = "❌ Invalid or Expired";
+    result.style.color="red";
+  }
+}
+
+function back(){
+  window.location="home.html";
+}
+</script>
+
+</body>
+</html>
