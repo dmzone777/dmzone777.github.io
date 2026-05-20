@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Tournaments</title>
+
+<style>
+body{
+    background:#0f2027;
+    color:white;
+    font-family:sans-serif;
+}
+.card{
+    background:#1c1c1c;
+    margin:15px;
+    padding:15px;
+    border-radius:10px;
+}
+.live{color:lime;}
+.upcoming{color:orange;}
+</style>
+
+</head>
+
+<body>
+
+<h2 style="text-align:center;">🏆 Tournaments</h2>
+
+<div id="list"></div>
+
+<center>
+<button onclick="back()">⬅ Back</button>
+</center>
+
+<script>
+let tournaments = [
+  {name:"FFMAI Qualifier", date:"Today", status:"LIVE"},
+  {name:"Squad Cup", date:"Tomorrow", status:"UPCOMING"}
+];
+
+let html = "";
+
+tournaments.forEach(t=>{
+  html += `
+    <div class="card">
+      <h3>${t.name}</h3>
+      <p>${t.date}</p>
+      <p class="${t.status=='LIVE'?'live':'upcoming'}">${t.status}</p>
+    </div>
+  `;
+});
+
+document.getElementById("list").innerHTML = html;
+
+function back(){
+  window.location="home.html";
+}
+</script>
+
+</body>
+</html>
