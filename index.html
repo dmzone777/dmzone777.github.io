@@ -1,65 +1,27 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FF Pro Login</title>
+<title>Video Editor - Upload</title>
+
+<link rel="stylesheet" href="style.css">
 
 <style>
-body{
-    margin:0;
-    font-family:sans-serif;
-    background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    height:100vh;
-    color:white;
+.upload-box{
+    border:2px dashed #38bdf8;
+    padding:20px;
+    border-radius:12px;
+    margin:20px;
 }
 
-.box{
-    background:rgba(0,0,0,0.7);
-    padding:30px;
-    border-radius:15px;
-    text-align:center;
-    width:300px;
-    box-shadow:0 0 20px #00ffcc;
-}
-
-h2{
-    margin-bottom:20px;
-    color:#00ffcc;
-}
-
-input{
-    width:90%;
-    padding:12px;
-    margin:10px 0;
-    border:none;
-    border-radius:10px;
-    outline:none;
-}
-
-button{
-    width:95%;
-    padding:12px;
+input[type="file"]{
     margin-top:10px;
-    border:none;
-    border-radius:10px;
-    background:#00ffcc;
-    color:black;
-    font-weight:bold;
-    cursor:pointer;
-    transition:0.3s;
 }
 
-button:hover{
-    background:#00ccaa;
-}
-
-.msg{
-    margin-top:10px;
-    font-size:14px;
+.note{
+    font-size:12px;
+    color:#94a3b8;
 }
 </style>
 
@@ -67,63 +29,34 @@ button:hover{
 
 <body>
 
-<div class="box">
-    <h2>🔥 FF PRO LOGIN</h2>
+<h2>🎬 Upload Your Video</h2>
 
-    <input type="email" id="email" placeholder="Enter Email">
-    <input type="password" id="password" placeholder="Enter Password">
-
-    <button onclick="login()">Login</button>
-    <button onclick="signup()">Signup</button>
-
-    <div class="msg" id="msg"></div>
+<div class="upload-box">
+    <p>Select a video file</p>
+    <input type="file" id="videoInput" accept="video/*">
+    <p class="note">Supported: MP4, WebM (browser dependent)</p>
 </div>
 
-<script type="module">
+<video id="videoPreview" controls></video>
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword }
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+<br><br>
 
-const firebaseConfig = {
-  apiKey: "AIzaSyAtJzjzNsBvMVj6bOfByWzX21hxSAyLYVQ",
-  authDomain: "mini-instagram-95485.firebaseapp.com",
-  projectId: "mini-instagram-95485",
-  storageBucket: "mini-instagram-95485.firebasestorage.app",
-  messagingSenderId: "426906615408",
-  appId: "1:426906615408:web:1ba85f1d00b9c09e083eb5"
-};
+<button id="nextBtn">Next ➡ Effects</button>
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+<script src="script.js"></script>
 
-const msg = document.getElementById("msg");
+<script>
+// Next button validation
+document.getElementById("nextBtn").addEventListener("click", ()=>{
+    let saved = localStorage.getItem("video");
 
-window.signup = function(){
-    createUserWithEmailAndPassword(auth, email.value, password.value)
-    .then(()=>{
-        msg.innerHTML = "✅ Signup Success! Now login.";
-        msg.style.color = "lightgreen";
-    })
-    .catch(e=>{
-        msg.innerHTML = e.message;
-        msg.style.color = "red";
-    });
-}
+    if(!saved){
+        alert("⚠️ Pehle video upload karo!");
+        return;
+    }
 
-window.login = function(){
-    signInWithEmailAndPassword(auth, email.value, password.value)
-    .then(()=>{
-        msg.innerHTML = "✅ Login Success!";
-        msg.style.color = "lightgreen";
-        setTimeout(()=>{ window.location="home.html"; },1000);
-    })
-    .catch(e=>{
-        msg.innerHTML = e.message;
-        msg.style.color = "red";
-    });
-}
-
+    window.location.href = "effects.html";
+});
 </script>
 
 </body>
