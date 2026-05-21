@@ -5,9 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Video Editor - Upload</title>
 
-<link rel="stylesheet" href="style.css">
-
 <style>
+body{
+    font-family:sans-serif;
+    background:#020617;
+    color:white;
+    text-align:center;
+}
+
 .upload-box{
     border:2px dashed #38bdf8;
     padding:20px;
@@ -15,13 +20,20 @@
     margin:20px;
 }
 
-input[type="file"]{
-    margin-top:10px;
+video{
+    width:90%;
+    max-width:420px;
+    margin-top:15px;
+    border-radius:12px;
 }
 
-.note{
-    font-size:12px;
-    color:#94a3b8;
+button{
+    padding:10px 20px;
+    margin:10px;
+    border:none;
+    border-radius:8px;
+    background:#38bdf8;
+    font-weight:bold;
 }
 </style>
 
@@ -34,7 +46,6 @@ input[type="file"]{
 <div class="upload-box">
     <p>Select a video file</p>
     <input type="file" id="videoInput" accept="video/*">
-    <p class="note">Supported: MP4, WebM (browser dependent)</p>
 </div>
 
 <video id="videoPreview" controls></video>
@@ -43,12 +54,45 @@ input[type="file"]{
 
 <button id="nextBtn">Next ➡ Effects</button>
 
-<script src="script.js"></script>
-
 <script>
-// Next button validation
+
+let video = document.getElementById("videoPreview");
+let input = document.getElementById("videoInput");
+
+// 🔥 LOAD SAVED VIDEO
+window.onload = () => {
+    let saved = localStorage.getItem("videoData");
+    if(saved){
+        video.src = saved;
+    }
+};
+
+// 🔥 UPLOAD FIX (BASE64)
+input.addEventListener("change", function(e){
+    let file = e.target.files[0];
+
+    if(file){
+        let reader = new FileReader();
+
+        reader.onload = function(event){
+            let base64 = event.target.result;
+
+            // Save
+            localStorage.setItem("videoData", base64);
+
+            // Show preview
+            video.src = base64;
+            video.load();
+            video.play();
+        };
+
+        reader.readAsDataURL(file);
+    }
+});
+
+// 🔥 NEXT BUTTON FIX
 document.getElementById("nextBtn").addEventListener("click", ()=>{
-    let saved = localStorage.getItem("video");
+    let saved = localStorage.getItem("videoData");
 
     if(!saved){
         alert("⚠️ Pehle video upload karo!");
@@ -57,6 +101,7 @@ document.getElementById("nextBtn").addEventListener("click", ()=>{
 
     window.location.href = "effects.html";
 });
+
 </script>
 
 </body>
