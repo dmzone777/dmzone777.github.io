@@ -1,59 +1,103 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Tournaments</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tools</title>
+
+<link rel="stylesheet" href="style.css">
 
 <style>
-body{
-    background:#0f2027;
-    color:white;
-    font-family:sans-serif;
-}
-.card{
-    background:#1c1c1c;
-    margin:15px;
+.panel{
+    background:#0f172a;
     padding:15px;
-    border-radius:10px;
+    border-radius:12px;
+    margin:15px;
 }
-.live{color:lime;}
-.upcoming{color:orange;}
+button{
+    margin:5px;
+}
 </style>
 
 </head>
 
 <body>
 
-<h2 style="text-align:center;">🏆 Tournaments</h2>
+<h2>🛠️ Tools Panel</h2>
 
-<div id="list"></div>
+<video id="videoPreview" controls></video>
 
-<center>
-<button onclick="back()">⬅ Back</button>
-</center>
+<div class="panel">
+
+<h3>Transform</h3>
+<button onclick="rotateVideo()">Rotate ⟳</button>
+<button onclick="flipVideo()">Flip ⇋</button>
+<button onclick="resetTransform()">Reset</button>
+
+</div>
+
+<div class="panel">
+
+<h3>Trim</h3>
+<button onclick="trimVideo()">✂️ Trim Video</button>
+
+</div>
+
+<br>
+
+<button onclick="goBack()">⬅ Back</button>
+<button onclick="goNext()">Next ➡ Export</button>
+
+<script src="script.js"></script>
 
 <script>
-let tournaments = [
-  {name:"FFMAI Qualifier", date:"Today", status:"LIVE"},
-  {name:"Squad Cup", date:"Tomorrow", status:"UPCOMING"}
-];
 
-let html = "";
-
-tournaments.forEach(t=>{
-  html += `
-    <div class="card">
-      <h3>${t.name}</h3>
-      <p>${t.date}</p>
-      <p class="${t.status=='LIVE'?'live':'upcoming'}">${t.status}</p>
-    </div>
-  `;
-});
-
-document.getElementById("list").innerHTML = html;
-
-function back(){
-  window.location="home.html";
+// 🔄 Reset Transform
+function resetTransform(){
+    if(video){
+        video.style.transform = "rotate(0deg) scaleX(1)";
+    }
 }
+
+// ✂️ Safe Trim (preview based)
+function trimVideo(){
+    let start = prompt("Enter start time (seconds):");
+    let end = prompt("Enter end time (seconds):");
+
+    start = parseFloat(start);
+    end = parseFloat(end);
+
+    if(isNaN(start) || isNaN(end) || start < 0 || end <= start){
+        alert("⚠️ Invalid input!");
+        return;
+    }
+
+    if(video){
+        video.currentTime = start;
+
+        let interval = setInterval(()=>{
+            if(video.currentTime >= end){
+                video.pause();
+                clearInterval(interval);
+            }
+        },200);
+    }
+}
+
+// Navigation
+function goNext(){
+    let saved = localStorage.getItem("video");
+    if(!saved){
+        alert("⚠️ Video missing!");
+        return;
+    }
+    window.location.href = "export.html";
+}
+
+function goBack(){
+    window.location.href = "audio.html";
+}
+
 </script>
 
 </body>
