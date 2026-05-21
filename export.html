@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Export Video</title>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+.panel{
+    background:#0f172a;
+    padding:15px;
+    border-radius:12px;
+    margin:15px;
+}
+.info{
+    font-size:14px;
+    color:#94a3b8;
+}
+</style>
+
+</head>
+
+<body>
+
+<h2>📥 Export Video</h2>
+
+<video id="videoPreview" controls></video>
+
+<div class="panel">
+    <h3>Project Summary</h3>
+    <p class="info">✔ Effects Applied</p>
+    <p class="info">✔ Audio Adjusted</p>
+    <p class="info">✔ Tools Used</p>
+</div>
+
+<br>
+
+<button onclick="downloadVideo()">⬇ Download</button>
+<button onclick="resetProject()">🗑 Reset Project</button>
+
+<br><br>
+
+<button onclick="goBack()">⬅ Back</button>
+
+<script src="script.js"></script>
+
+<script>
+
+// 📥 Download (safe demo)
+function downloadVideo(){
+    let saved = localStorage.getItem("video");
+
+    if(!saved){
+        alert("⚠️ No video found!");
+        return;
+    }
+
+    alert("🔥 Real download next upgrade me (FFmpeg system)\n\nAbhi preview based hai.");
+}
+
+// 🗑 Reset Project
+function resetProject(){
+    let confirmReset = confirm("⚠️ Kya tum project reset karna chahte ho?");
+    
+    if(confirmReset){
+        localStorage.removeItem("video");
+        alert("✅ Project reset ho gaya!");
+        window.location.href = "index.html";
+    }
+}
+
+// Navigation
+function goBack(){
+    window.location.href = "tools.html";
+}
+
+</script>
+
+</body>
+</html>
